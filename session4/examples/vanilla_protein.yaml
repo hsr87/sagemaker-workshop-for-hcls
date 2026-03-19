@@ -1,0 +1,11 @@
+entities:
+  # 설계할 바인더 단백질 (80~140 잔기)
+  - protein:
+      id: C
+      sequence: 80..140
+  # 타겟 구조 (.cif 파일에서 로드)
+  - file:
+      path: 1g13.cif
+      include:
+        - chain:
+            id: A

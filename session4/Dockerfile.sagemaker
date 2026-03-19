@@ -1,0 +1,55 @@
+# syntax=docker/dockerfile:1
+# BoltzGen SageMaker용 Docker 이미지
+# Processing Job (추론) 및 Training Job (학습) 모두 지원
+
+FROM nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    PIP_NO_CACHE_DIR=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    CUDA_HOME=/usr/local/cuda \
+    PIP_EXTRA_INDEX_URL=https://download.pytorch.org/whl/cu121 \
+    HF_HOME=/opt/ml/processing/cache \
+    PATH="/opt/ml/code:${PATH}"
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    python3.10 \
+    python3.10-dev \
+    python3-pip \
+    python3-venv \
+    python3-wheel \
+    build-essential \
+    git \
+    cmake \
+    pkg-config \
+    libffi-dev \
+    libssl-dev \
+    libxml2-dev \
+    libxslt-dev \
+    libgl1 \
+    libhdf5-dev \
+    libboost-all-dev \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.10 1 && \
+    update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1 && \
+    python -m pip install --upgrade pip setuptools setuptools_scm wheel
+
+WORKDIR /opt/ml/code
+
+# BoltzGen 패키지 설치
+# 실제 사용 시 아래 주석을 해제하고 BoltzGen 소스 경로를 지정하세요
+# COPY . /tmp/boltzgen
+# RUN pip install --no-cache-dir /tmp/boltzgen && rm -rf /tmp/boltzgen
+
+# SageMaker 표준 디렉토리 생성
+RUN mkdir -p /opt/ml/processing/input \
+    /opt/ml/processing/output \
+    /opt/ml/processing/cache \
+    /opt/ml/model \
+    /opt/ml/code
+
+WORKDIR /opt/ml/processing
