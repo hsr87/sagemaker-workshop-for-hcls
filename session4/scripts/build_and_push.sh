@@ -3,7 +3,7 @@
 
 set -e
 
-REGION=${AWS_REGION:-us-east-1}
+REGION=${AWS_REGION:-us-west-2}
 ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 REPOSITORY_NAME="boltzgen-sagemaker"
 IMAGE_TAG=${IMAGE_TAG:-latest}
