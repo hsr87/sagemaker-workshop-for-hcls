@@ -201,6 +201,39 @@ def generate_manifest(target_dir: Path):
     logger.info(f"Generated manifest.json with {len(records)} records")
 
 
+def ensure_mol_files(mols_dir: Path):
+    """mols 디렉토리에 개별 분자 pkl 파일(ALA.pkl 등)이 있는지 확인하고, 없으면 다운로드합니다."""
+    canonical_tokens = [
+        "ALA", "ARG", "ASN", "ASP", "CYS", "GLN", "GLU", "GLY", "HIS", "ILE",
+        "LEU", "LYS", "MET", "PHE", "PRO", "SER", "THR", "TRP", "TYR", "VAL",
+    ]
+
+    # 이미 개별 pkl 파일이 있으면 스킵
+    if (mols_dir / "ALA.pkl").exists():
+        logger.info(f"Mol pkl files already exist in {mols_dir}")
+        return
+
+    logger.info(f"Individual mol pkl files not found in {mols_dir}. Downloading mols.zip...")
+    import urllib.request
+    import zipfile
+    import tempfile
+
+    mols_zip_url = "https://huggingface.co/datasets/boltzgen/inference-data/resolve/main/mols.zip"
+    with tempfile.NamedTemporaryFile(suffix='.zip', delete=False) as tmp:
+        tmp_path = tmp.name
+
+    try:
+        urllib.request.urlretrieve(mols_zip_url, tmp_path)
+        with zipfile.ZipFile(tmp_path, 'r') as zf:
+            zf.extractall(mols_dir)
+        logger.info(f"Extracted mol files to {mols_dir}: {list(mols_dir.glob('*.pkl'))[:5]}...")
+    except Exception as e:
+        logger.error(f"Failed to download mols.zip: {e}")
+        raise
+    finally:
+        Path(tmp_path).unlink(missing_ok=True)
+
+
 def prepare_data_paths(env: dict) -> dict:
     """SageMaker 채널에서 데이터 경로를 준비합니다."""
     paths = {}
@@ -220,8 +253,10 @@ def prepare_data_paths(env: dict) -> dict:
         if (training_dir / 'msa').exists():
             paths['msa_dir'] = str(training_dir / 'msa')
 
-        if (training_dir / 'mols').exists():
-            paths['moldir'] = str(training_dir / 'mols')
+        mols_dir = training_dir / 'mols'
+        if mols_dir.exists():
+            ensure_mol_files(mols_dir)
+            paths['moldir'] = str(mols_dir)
 
         logger.info(f"Training directory contents: {list(training_dir.iterdir())[:10]}")
 
