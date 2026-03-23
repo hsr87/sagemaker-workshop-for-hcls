@@ -202,36 +202,22 @@ def generate_manifest(target_dir: Path):
 
 
 def ensure_mol_files(mols_dir: Path):
-    """mols 디렉토리에 개별 분자 pkl 파일(ALA.pkl 등)이 있는지 확인하고, 없으면 다운로드합니다."""
-    canonical_tokens = [
-        "ALA", "ARG", "ASN", "ASP", "CYS", "GLN", "GLU", "GLY", "HIS", "ILE",
-        "LEU", "LYS", "MET", "PHE", "PRO", "SER", "THR", "TRP", "TYR", "VAL",
-    ]
-
-    # 이미 개별 pkl 파일이 있으면 스킵
+    """mols 디렉토리에 개별 분자 pkl 파일(ALA.pkl 등)이 있는지 확인하고, 없으면 source_dir에서 복사합니다."""
     if (mols_dir / "ALA.pkl").exists():
         logger.info(f"Mol pkl files already exist in {mols_dir}")
         return
 
-    logger.info(f"Individual mol pkl files not found in {mols_dir}. Downloading mols.zip...")
-    import urllib.request
-    import zipfile
-    import tempfile
+    # source_dir(/opt/ml/code)에 번들된 mol 파일 복사
+    bundled_mols = Path('/opt/ml/code/data/mols')
+    if bundled_mols.exists():
+        logger.info(f"Copying bundled mol files from {bundled_mols} to {mols_dir}...")
+        for pkl_file in bundled_mols.glob('*.pkl'):
+            shutil.copy2(pkl_file, mols_dir / pkl_file.name)
+        logger.info(f"Copied {len(list(mols_dir.glob('*.pkl')))} mol files")
+        return
 
-    mols_zip_url = "https://huggingface.co/datasets/boltzgen/inference-data/resolve/main/mols.zip"
-    with tempfile.NamedTemporaryFile(suffix='.zip', delete=False) as tmp:
-        tmp_path = tmp.name
-
-    try:
-        urllib.request.urlretrieve(mols_zip_url, tmp_path)
-        with zipfile.ZipFile(tmp_path, 'r') as zf:
-            zf.extractall(mols_dir)
-        logger.info(f"Extracted mol files to {mols_dir}: {list(mols_dir.glob('*.pkl'))[:5]}...")
-    except Exception as e:
-        logger.error(f"Failed to download mols.zip: {e}")
-        raise
-    finally:
-        Path(tmp_path).unlink(missing_ok=True)
+    logger.error(f"Bundled mol files not found at {bundled_mols}")
+    raise FileNotFoundError(f"Mol pkl files not found in {mols_dir} or {bundled_mols}")
 
 
 def prepare_data_paths(env: dict) -> dict:
