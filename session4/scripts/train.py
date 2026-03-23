@@ -152,6 +152,55 @@ def setup_distributed(env: dict):
         logger.info(f"  Master: {env['master_addr']}:{env['master_port']}")
 
 
+def generate_manifest(target_dir: Path):
+    """target_dir에 manifest.json이 없으면 구조 파일로부터 자동 생성합니다."""
+    import numpy as np
+
+    manifest_path = target_dir / 'manifest.json'
+    if manifest_path.exists():
+        logger.info(f"Manifest already exists: {manifest_path}")
+        return
+
+    structures_dir = target_dir / 'structures'
+    if not structures_dir.exists():
+        logger.warning(f"Structures directory not found: {structures_dir}")
+        return
+
+    npz_files = list(structures_dir.glob('*.npz'))
+    logger.info(f"Generating manifest.json from {len(npz_files)} structure files...")
+
+    records = []
+    for npz_file in npz_files:
+        pdb_id = npz_file.stem
+        record = {
+            "id": pdb_id,
+            "structure": {"resolution": 2.0, "method": "X-RAY DIFFRACTION", "released": "2020-01-01"},
+            "chains": [],
+            "interfaces": [],
+        }
+        try:
+            data = np.load(npz_file, allow_pickle=True)
+            if "chain_id" in data:
+                for i, cid in enumerate(np.unique(data["chain_id"])):
+                    record["chains"].append({
+                        "chain_id": int(cid) if isinstance(cid, (int, np.integer)) else i,
+                        "chain_name": str(cid),
+                        "mol_type": 0,
+                        "cluster_id": f"{pdb_id}_{cid}",
+                        "msa_id": f"{pdb_id}_{cid}",
+                        "num_residues": int(np.sum(data["chain_id"] == cid)),
+                        "valid": True,
+                    })
+            data.close()
+        except Exception as e:
+            logger.warning(f"Could not read {pdb_id}: {e}")
+        records.append(record)
+
+    with open(manifest_path, 'w') as f:
+        json.dump({"records": records}, f, indent=2)
+    logger.info(f"Generated manifest.json with {len(records)} records")
+
+
 def prepare_data_paths(env: dict) -> dict:
     """SageMaker 채널에서 데이터 경로를 준비합니다."""
     paths = {}
@@ -163,14 +212,18 @@ def prepare_data_paths(env: dict) -> dict:
         rcsb_targets = training_dir / 'targets' / 'rcsb_processed_targets'
         if rcsb_targets.exists():
             paths['target_dir'] = str(rcsb_targets)
+            generate_manifest(rcsb_targets)
         elif (training_dir / 'targets').exists():
             paths['target_dir'] = str(training_dir / 'targets')
+            generate_manifest(training_dir / 'targets')
 
         if (training_dir / 'msa').exists():
             paths['msa_dir'] = str(training_dir / 'msa')
 
         if (training_dir / 'mols').exists():
             paths['moldir'] = str(training_dir / 'mols')
+
+        logger.info(f"Training directory contents: {list(training_dir.iterdir())[:10]}")
 
     if checkpoints_dir.exists():
         for ckpt_file in checkpoints_dir.glob('*.ckpt'):
