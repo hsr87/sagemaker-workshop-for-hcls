@@ -303,6 +303,7 @@ def build_config_overrides(args, env: dict, data_paths: dict, tensorboard_dir: s
     if args.disable_validation:
         overrides.append("model.validators=[]")
         overrides.append("model.refolding_validator=null")
+        overrides.append("model.num_val_datasets=0")
         overrides.append("trainer.num_sanity_val_steps=0")
         overrides.append("data.datasets.0.split=null")
         overrides.append("data.monomer_split=null")
