@@ -18,11 +18,8 @@ from pathlib import Path
 def install_dependencies():
     """DLC에 포함되지 않은 BoltzGen 의존성 패키지를 설치합니다."""
     print("Installing BoltzGen dependencies...")
-    # DLC의 torch/torchvision을 덮어쓰지 않도록 --no-deps로 boltzgen 설치
-    subprocess.check_call([
-        sys.executable, '-m', 'pip', 'install', '--quiet', '--no-deps', 'boltzgen'
-    ])
     missing_deps = [
+        'boltzgen',
         'pytorch-lightning>=2.0.0',
         'hydra-core>=1.3.0',
         'omegaconf>=2.3.0',
@@ -46,15 +43,10 @@ def install_dependencies():
     for dep in missing_deps:
         try:
             subprocess.check_call([
-                sys.executable, '-m', 'pip', 'install', '--quiet', '--no-deps', dep
+                sys.executable, '-m', 'pip', 'install', '--quiet', dep
             ])
         except subprocess.CalledProcessError:
             print(f"Warning: Failed to install {dep}")
-    # 의존성 체인 설치 (torch 관련 제외)
-    subprocess.check_call([
-        sys.executable, '-m', 'pip', 'install', '--quiet',
-        '--no-deps', 'torchmetrics', 'lightning-utilities'
-    ])
     print("Dependencies installation complete.")
 
 
