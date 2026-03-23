@@ -12,4 +12,4 @@
 
 ## 실습 내용
 
-TBD
+- 참고: https://github.com/aws-samples/sagemaker-genai-hosting-examples/tree/main/workshop/inference

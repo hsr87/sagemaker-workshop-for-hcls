@@ -12,4 +12,5 @@ Slurm 기반으로 LLM 분산 학습을 수행하는 방법을 실습합니다.
 
 ## 실습 내용
 
-TBD
+- https://bit.ly/hyperpod-slurm
+- [실습 바로 가기](https://daekeun.notion.site/Amazon-SageMaker-HyperPod-w-Slurm-Workshop-2b1346ce84a8804792c2d08e8d9bf18f?pvs=25#2b1346ce84a880e6a34ce550bcc17b15)
