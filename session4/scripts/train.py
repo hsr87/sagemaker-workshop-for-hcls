@@ -74,6 +74,7 @@ logger = logging.getLogger(__name__)
 def get_boltzgen_config_path() -> Path:
     """BoltzGen 설정 디렉토리 경로를 탐색합니다."""
     possible_paths = [
+        Path('/opt/ml/code/config/train'),
         Path('/opt/ml/code/src/boltzgen/resources/config/train'),
         Path('/opt/boltzgen/config/train'),
     ]
