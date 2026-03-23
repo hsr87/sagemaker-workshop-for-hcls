@@ -1,0 +1,124 @@
+{
+  "records": [
+    {
+      "id": "1hye",
+      "structure": {
+        "resolution": 2.0,
+        "method": "X-RAY DIFFRACTION",
+        "released": "2020-01-01"
+      },
+      "chains": [],
+      "interfaces": []
+    },
+    {
+      "id": "1pwa",
+      "structure": {
+        "resolution": 2.0,
+        "method": "X-RAY DIFFRACTION",
+        "released": "2020-01-01"
+      },
+      "chains": [],
+      "interfaces": []
+    },
+    {
+      "id": "1q3l",
+      "structure": {
+        "resolution": 2.0,
+        "method": "X-RAY DIFFRACTION",
+        "released": "2020-01-01"
+      },
+      "chains": [],
+      "interfaces": []
+    },
+    {
+      "id": "2mwr",
+      "structure": {
+        "resolution": 2.0,
+        "method": "X-RAY DIFFRACTION",
+        "released": "2020-01-01"
+      },
+      "chains": [],
+      "interfaces": []
+    },
+    {
+      "id": "2uyv",
+      "structure": {
+        "resolution": 2.0,
+        "method": "X-RAY DIFFRACTION",
+        "released": "2020-01-01"
+      },
+      "chains": [],
+      "interfaces": []
+    },
+    {
+      "id": "4n8f",
+      "structure": {
+        "resolution": 2.0,
+        "method": "X-RAY DIFFRACTION",
+        "released": "2020-01-01"
+      },
+      "chains": [],
+      "interfaces": []
+    },
+    {
+      "id": "4v6b",
+      "structure": {
+        "resolution": 2.0,
+        "method": "X-RAY DIFFRACTION",
+        "released": "2020-01-01"
+      },
+      "chains": [],
+      "interfaces": []
+    },
+    {
+      "id": "5bk9",
+      "structure": {
+        "resolution": 2.0,
+        "method": "X-RAY DIFFRACTION",
+        "released": "2020-01-01"
+      },
+      "chains": [],
+      "interfaces": []
+    },
+    {
+      "id": "7g1s",
+      "structure": {
+        "resolution": 2.0,
+        "method": "X-RAY DIFFRACTION",
+        "released": "2020-01-01"
+      },
+      "chains": [],
+      "interfaces": []
+    },
+    {
+      "id": "7k6q",
+      "structure": {
+        "resolution": 2.0,
+        "method": "X-RAY DIFFRACTION",
+        "released": "2020-01-01"
+      },
+      "chains": [],
+      "interfaces": []
+    },
+    {
+      "id": "7s8u",
+      "structure": {
+        "resolution": 2.0,
+        "method": "X-RAY DIFFRACTION",
+        "released": "2020-01-01"
+      },
+      "chains": [],
+      "interfaces": []
+    },
+    {
+      "id": "8fz2",
+      "structure": {
+        "resolution": 2.0,
+        "method": "X-RAY DIFFRACTION",
+        "released": "2020-01-01"
+      },
+      "chains": [],
+      "interfaces": []
+    }
+  ]
+}
