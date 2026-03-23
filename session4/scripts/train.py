@@ -19,6 +19,7 @@ def install_dependencies():
     """DLC에 포함되지 않은 BoltzGen 의존성 패키지를 설치합니다."""
     print("Installing BoltzGen dependencies...")
     missing_deps = [
+        'boltzgen',
         'pytorch-lightning>=2.0.0',
         'hydra-core>=1.3.0',
         'omegaconf>=2.3.0',
