@@ -1,0 +1,22 @@
+{
+  "id": "7s8u",
+  "structure": {
+    "resolution": 2.0,
+    "method": "X-RAY DIFFRACTION",
+    "released": "2020-01-01",
+    "num_chains": 1,
+    "num_interfaces": 0
+  },
+  "chains": [
+    {
+      "chain_id": 0,
+      "chain_name": "A1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 0,
+      "num_residues": 707,
+      "valid": true
+    }
+  ],
+  "interfaces": []
+}

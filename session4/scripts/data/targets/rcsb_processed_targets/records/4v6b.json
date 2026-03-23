@@ -1,0 +1,722 @@
+{
+  "id": "4v6b",
+  "structure": {
+    "resolution": 2.0,
+    "method": "X-RAY DIFFRACTION",
+    "released": "2020-01-01",
+    "num_chains": 32,
+    "num_interfaces": 84
+  },
+  "chains": [
+    {
+      "chain_id": 0,
+      "chain_name": "A1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 0,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 1,
+      "chain_name": "OE1",
+      "mol_type": 3,
+      "cluster_id": 1,
+      "msa_id": 1,
+      "num_residues": 1,
+      "valid": true
+    },
+    {
+      "chain_id": 2,
+      "chain_name": "C1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 2,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 3,
+      "chain_name": "QE1",
+      "mol_type": 3,
+      "cluster_id": 1,
+      "msa_id": 3,
+      "num_residues": 1,
+      "valid": true
+    },
+    {
+      "chain_id": 4,
+      "chain_name": "E1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 4,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 5,
+      "chain_name": "RE1",
+      "mol_type": 3,
+      "cluster_id": 1,
+      "msa_id": 5,
+      "num_residues": 1,
+      "valid": true
+    },
+    {
+      "chain_id": 6,
+      "chain_name": "G1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 6,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 7,
+      "chain_name": "I1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 7,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 8,
+      "chain_name": "K1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 8,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 9,
+      "chain_name": "VE1",
+      "mol_type": 3,
+      "cluster_id": 1,
+      "msa_id": 9,
+      "num_residues": 1,
+      "valid": true
+    },
+    {
+      "chain_id": 10,
+      "chain_name": "M1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 10,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 11,
+      "chain_name": "O1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 11,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 12,
+      "chain_name": "XE1",
+      "mol_type": 3,
+      "cluster_id": 1,
+      "msa_id": 12,
+      "num_residues": 1,
+      "valid": true
+    },
+    {
+      "chain_id": 13,
+      "chain_name": "Q1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 13,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 14,
+      "chain_name": "S1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 14,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 15,
+      "chain_name": "U1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 15,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 16,
+      "chain_name": "W1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 16,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 17,
+      "chain_name": "AF1",
+      "mol_type": 3,
+      "cluster_id": 1,
+      "msa_id": 17,
+      "num_residues": 1,
+      "valid": true
+    },
+    {
+      "chain_id": 18,
+      "chain_name": "Y1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 18,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 19,
+      "chain_name": "BF1",
+      "mol_type": 3,
+      "cluster_id": 1,
+      "msa_id": 19,
+      "num_residues": 1,
+      "valid": true
+    },
+    {
+      "chain_id": 20,
+      "chain_name": "AA1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 20,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 21,
+      "chain_name": "CA1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 21,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 22,
+      "chain_name": "DF1",
+      "mol_type": 3,
+      "cluster_id": 1,
+      "msa_id": 22,
+      "num_residues": 1,
+      "valid": true
+    },
+    {
+      "chain_id": 23,
+      "chain_name": "EA1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 23,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 24,
+      "chain_name": "GA1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 24,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 25,
+      "chain_name": "IA1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 25,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 26,
+      "chain_name": "KA1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 26,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 27,
+      "chain_name": "MA1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 27,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 28,
+      "chain_name": "OA1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 28,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 29,
+      "chain_name": "QA1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 29,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 30,
+      "chain_name": "SA1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 30,
+      "num_residues": 192,
+      "valid": true
+    },
+    {
+      "chain_id": 31,
+      "chain_name": "UA1",
+      "mol_type": 0,
+      "cluster_id": 0,
+      "msa_id": 31,
+      "num_residues": 192,
+      "valid": true
+    }
+  ],
+  "interfaces": [
+    {
+      "chain_1": 8,
+      "chain_2": 9,
+      "valid": true
+    },
+    {
+      "chain_1": 8,
+      "chain_2": 18,
+      "valid": true
+    },
+    {
+      "chain_1": 0,
+      "chain_2": 14,
+      "valid": true
+    },
+    {
+      "chain_1": 14,
+      "chain_2": 31,
+      "valid": true
+    },
+    {
+      "chain_1": 3,
+      "chain_2": 31,
+      "valid": true
+    },
+    {
+      "chain_1": 17,
+      "chain_2": 30,
+      "valid": true
+    },
+    {
+      "chain_1": 4,
+      "chain_2": 30,
+      "valid": true
+    },
+    {
+      "chain_1": 11,
+      "chain_2": 23,
+      "valid": true
+    },
+    {
+      "chain_1": 9,
+      "chain_2": 26,
+      "valid": true
+    },
+    {
+      "chain_1": 10,
+      "chain_2": 27,
+      "valid": true
+    },
+    {
+      "chain_1": 1,
+      "chain_2": 24,
+      "valid": true
+    },
+    {
+      "chain_1": 24,
+      "chain_2": 26,
+      "valid": true
+    },
+    {
+      "chain_1": 18,
+      "chain_2": 19,
+      "valid": true
+    },
+    {
+      "chain_1": 7,
+      "chain_2": 19,
+      "valid": true
+    },
+    {
+      "chain_1": 7,
+      "chain_2": 28,
+      "valid": true
+    },
+    {
+      "chain_1": 14,
+      "chain_2": 15,
+      "valid": true
+    },
+    {
+      "chain_1": 10,
+      "chain_2": 20,
+      "valid": true
+    },
+    {
+      "chain_1": 15,
+      "chain_2": 16,
+      "valid": true
+    },
+    {
+      "chain_1": 6,
+      "chain_2": 13,
+      "valid": true
+    },
+    {
+      "chain_1": 7,
+      "chain_2": 30,
+      "valid": true
+    },
+    {
+      "chain_1": 8,
+      "chain_2": 25,
+      "valid": true
+    },
+    {
+      "chain_1": 10,
+      "chain_2": 22,
+      "valid": true
+    },
+    {
+      "chain_1": 16,
+      "chain_2": 17,
+      "valid": true
+    },
+    {
+      "chain_1": 10,
+      "chain_2": 31,
+      "valid": true
+    },
+    {
+      "chain_1": 2,
+      "chain_2": 27,
+      "valid": true
+    },
+    {
+      "chain_1": 7,
+      "chain_2": 23,
+      "valid": true
+    },
+    {
+      "chain_1": 18,
+      "chain_2": 23,
+      "valid": true
+    },
+    {
+      "chain_1": 20,
+      "chain_2": 26,
+      "valid": true
+    },
+    {
+      "chain_1": 13,
+      "chain_2": 14,
+      "valid": true
+    },
+    {
+      "chain_1": 27,
+      "chain_2": 31,
+      "valid": true
+    },
+    {
+      "chain_1": 2,
+      "chain_2": 29,
+      "valid": true
+    },
+    {
+      "chain_1": 21,
+      "chain_2": 27,
+      "valid": true
+    },
+    {
+      "chain_1": 4,
+      "chain_2": 29,
+      "valid": true
+    },
+    {
+      "chain_1": 8,
+      "chain_2": 20,
+      "valid": true
+    },
+    {
+      "chain_1": 13,
+      "chain_2": 16,
+      "valid": true
+    },
+    {
+      "chain_1": 10,
+      "chain_2": 26,
+      "valid": true
+    },
+    {
+      "chain_1": 2,
+      "chain_2": 31,
+      "valid": true
+    },
+    {
+      "chain_1": 16,
+      "chain_2": 30,
+      "valid": true
+    },
+    {
+      "chain_1": 20,
+      "chain_2": 21,
+      "valid": true
+    },
+    {
+      "chain_1": 3,
+      "chain_2": 14,
+      "valid": true
+    },
+    {
+      "chain_1": 22,
+      "chain_2": 27,
+      "valid": true
+    },
+    {
+      "chain_1": 2,
+      "chain_2": 15,
+      "valid": true
+    },
+    {
+      "chain_1": 11,
+      "chain_2": 27,
+      "valid": true
+    },
+    {
+      "chain_1": 6,
+      "chain_2": 24,
+      "valid": true
+    },
+    {
+      "chain_1": 21,
+      "chain_2": 22,
+      "valid": true
+    },
+    {
+      "chain_1": 4,
+      "chain_2": 15,
+      "valid": true
+    },
+    {
+      "chain_1": 12,
+      "chain_2": 28,
+      "valid": true
+    },
+    {
+      "chain_1": 23,
+      "chain_2": 28,
+      "valid": true
+    },
+    {
+      "chain_1": 8,
+      "chain_2": 24,
+      "valid": true
+    },
+    {
+      "chain_1": 10,
+      "chain_2": 21,
+      "valid": true
+    },
+    {
+      "chain_1": 11,
+      "chain_2": 29,
+      "valid": true
+    },
+    {
+      "chain_1": 6,
+      "chain_2": 17,
+      "valid": true
+    },
+    {
+      "chain_1": 15,
+      "chain_2": 29,
+      "valid": true
+    },
+    {
+      "chain_1": 18,
+      "chain_2": 25,
+      "valid": true
+    },
+    {
+      "chain_1": 7,
+      "chain_2": 25,
+      "valid": true
+    },
+    {
+      "chain_1": 0,
+      "chain_2": 13,
+      "valid": true
+    },
+    {
+      "chain_1": 28,
+      "chain_2": 29,
+      "valid": true
+    },
+    {
+      "chain_1": 8,
+      "chain_2": 26,
+      "valid": true
+    },
+    {
+      "chain_1": 0,
+      "chain_2": 31,
+      "valid": true
+    },
+    {
+      "chain_1": 7,
+      "chain_2": 18,
+      "valid": true
+    },
+    {
+      "chain_1": 12,
+      "chain_2": 23,
+      "valid": true
+    },
+    {
+      "chain_1": 4,
+      "chain_2": 28,
+      "valid": true
+    },
+    {
+      "chain_1": 2,
+      "chain_2": 3,
+      "valid": true
+    },
+    {
+      "chain_1": 1,
+      "chain_2": 13,
+      "valid": true
+    },
+    {
+      "chain_1": 5,
+      "chain_2": 29,
+      "valid": true
+    },
+    {
+      "chain_1": 0,
+      "chain_2": 24,
+      "valid": true
+    },
+    {
+      "chain_1": 18,
+      "chain_2": 20,
+      "valid": true
+    },
+    {
+      "chain_1": 6,
+      "chain_2": 30,
+      "valid": true
+    },
+    {
+      "chain_1": 9,
+      "chain_2": 20,
+      "valid": true
+    },
+    {
+      "chain_1": 2,
+      "chain_2": 14,
+      "valid": true
+    },
+    {
+      "chain_1": 0,
+      "chain_2": 26,
+      "valid": true
+    },
+    {
+      "chain_1": 4,
+      "chain_2": 5,
+      "valid": true
+    },
+    {
+      "chain_1": 0,
+      "chain_2": 1,
+      "valid": true
+    },
+    {
+      "chain_1": 5,
+      "chain_2": 15,
+      "valid": true
+    },
+    {
+      "chain_1": 11,
+      "chain_2": 28,
+      "valid": true
+    },
+    {
+      "chain_1": 6,
+      "chain_2": 16,
+      "valid": true
+    },
+    {
+      "chain_1": 6,
+      "chain_2": 25,
+      "valid": true
+    },
+    {
+      "chain_1": 25,
+      "chain_2": 30,
+      "valid": true
+    },
+    {
+      "chain_1": 21,
+      "chain_2": 23,
+      "valid": true
+    },
+    {
+      "chain_1": 4,
+      "chain_2": 16,
+      "valid": true
+    },
+    {
+      "chain_1": 11,
+      "chain_2": 12,
+      "valid": true
+    },
+    {
+      "chain_1": 19,
+      "chain_2": 25,
+      "valid": true
+    },
+    {
+      "chain_1": 11,
+      "chain_2": 21,
+      "valid": true
+    },
+    {
+      "chain_1": 13,
+      "chain_2": 24,
+      "valid": true
+    }
+  ]
+}
