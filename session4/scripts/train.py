@@ -39,6 +39,7 @@ def install_dependencies():
         'numba',
         'matplotlib',
         'huggingface_hub',
+        'wandb',
     ]
     for dep in missing_deps:
         try:
