@@ -18,36 +18,9 @@ from pathlib import Path
 def install_dependencies():
     """DLC에 포함되지 않은 BoltzGen 의존성 패키지를 설치합니다."""
     print("Installing BoltzGen dependencies...")
-    missing_deps = [
-        'boltzgen',
-        'pytorch-lightning>=2.0.0',
-        'hydra-core>=1.3.0',
-        'omegaconf>=2.3.0',
-        'einx',
-        'einops',
-        'biotite',
-        'gemmi==0.6.5',
-        'mashumaro',
-        'biopython',
-        'pydssp',
-        'logomaker',
-        'hydride',
-        'edit_distance',
-        'rdkit',
-        'pandas',
-        'pdbeccdutils',
-        'numba',
-        'matplotlib',
-        'huggingface_hub',
-        'wandb',
-    ]
-    for dep in missing_deps:
-        try:
-            subprocess.check_call([
-                sys.executable, '-m', 'pip', 'install', '--quiet', dep
-            ])
-        except subprocess.CalledProcessError:
-            print(f"Warning: Failed to install {dep}")
+    subprocess.check_call([
+        sys.executable, '-m', 'pip', 'install', '--quiet', 'boltzgen[dev]'
+    ])
     print("Dependencies installation complete.")
 
 
