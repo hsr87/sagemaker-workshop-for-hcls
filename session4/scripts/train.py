@@ -308,6 +308,12 @@ def build_config_overrides(args, env: dict, data_paths: dict, tensorboard_dir: s
         overrides.append("data.datasets.0.split=null")
         overrides.append("data.monomer_split=null")
         overrides.append("data.ligand_split=null")
+        # monomer/ligand target_dir도 학습 데이터 경로로 통일
+        if 'target_dir' in data_paths:
+            overrides.append(f"data.monomer_target_dir={data_paths['target_dir']}")
+            overrides.append(f"data.ligand_target_dir={data_paths['target_dir']}")
+        # 필터 비활성화 (소량 데이터에서 필터링 방지)
+        overrides.append("data.datasets.0.filters=[]")
 
     if args.skip_pretrained:
         overrides.append("pretrained=null")
