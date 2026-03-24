@@ -26,6 +26,20 @@ def install_dependencies():
 
 install_dependencies()
 
+
+def patch_boltzgen_manifest(training_manifest_path: str):
+    """pip 패키지 내장 manifest를 학습 데이터 manifest로 교체합니다."""
+    try:
+        import boltzgen
+        pkg_dir = Path(boltzgen.__file__).parent
+        for pkg_manifest in pkg_dir.rglob('manifest.json'):
+            import shutil as _shutil
+            _shutil.copy2(training_manifest_path, pkg_manifest)
+            print(f"Patched package manifest: {pkg_manifest} <- {training_manifest_path}")
+    except Exception as e:
+        print(f"Warning: Could not patch manifest: {e}")
+
+
 import json
 import logging
 import argparse
@@ -412,6 +426,12 @@ def main():
 
     data_paths = prepare_data_paths(env)
     logger.info(f"Data paths: {data_paths}")
+
+    # pip 패키지 내장 manifest를 학습 데이터 manifest로 교체
+    if 'target_dir' in data_paths:
+        manifest_file = Path(data_paths['target_dir']) / 'manifest.json'
+        if manifest_file.exists():
+            patch_boltzgen_manifest(str(manifest_file))
 
     config_overrides = build_config_overrides(args, env, data_paths, tensorboard_dir)
 
