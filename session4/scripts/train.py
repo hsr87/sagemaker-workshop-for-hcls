@@ -18,9 +18,19 @@ from pathlib import Path
 def install_dependencies():
     """DLC에 포함되지 않은 BoltzGen 의존성 패키지를 설치합니다."""
     print("Installing BoltzGen dependencies...")
-    subprocess.check_call([
-        sys.executable, '-m', 'pip', 'install', '--quiet', 'boltzgen[dev]'
-    ])
+    # boltzgen 소스코드를 source_dir에서 직접 사용 (pip 버전 dtype 호환 문제 회피)
+    # 의존성만 개별 설치
+    deps = [
+        'pytorch-lightning>=2.0.0', 'hydra-core>=1.3.0', 'omegaconf>=2.3.0',
+        'einx', 'einops', 'biotite', 'gemmi==0.6.5', 'mashumaro', 'biopython',
+        'pydssp', 'logomaker', 'hydride', 'edit_distance', 'rdkit', 'pandas',
+        'pdbeccdutils', 'numba', 'matplotlib', 'huggingface_hub',
+    ]
+    for dep in deps:
+        try:
+            subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--quiet', dep])
+        except subprocess.CalledProcessError:
+            print(f"Warning: Failed to install {dep}")
     print("Dependencies installation complete.")
 
 
@@ -253,39 +263,16 @@ def prepare_data_paths(env: dict) -> dict:
         if (training_dir / 'msa').exists():
             paths['msa_dir'] = str(training_dir / 'msa')
 
-        # moldir: boltzgen 패키지의 캐시에서 mol 데이터 다운로드 (dtype 호환 보장)
+        # moldir: source_dir에 번들된 mol 파일 사용 (참조 소스코드와 호환)
         mols_dir = training_dir / 'mols'
         mols_dir.mkdir(parents=True, exist_ok=True)
         if not (mols_dir / 'ALA.pkl').exists():
-            logger.info("Downloading mol files via huggingface_hub (boltzgen compatible)...")
-            import zipfile
-            import tempfile
-            try:
-                from huggingface_hub import hf_hub_download
-                zip_path = hf_hub_download(
-                    repo_id="boltzmannlabs/boltz2",
-                    filename="ccd/mols.zip",
-                    repo_type="model",
-                    cache_dir="/tmp/hf_cache",
-                )
-                with zipfile.ZipFile(zip_path, 'r') as zf:
-                    zf.extractall(mols_dir)
-                logger.info(f"Extracted mol files: {len(list(mols_dir.glob('*.pkl')))} files")
-            except Exception as e:
-                logger.warning(f"HF download failed: {e}, trying alternative source...")
-                try:
-                    zip_path = hf_hub_download(
-                        repo_id="boltzgen/inference-data",
-                        filename="mols.zip",
-                        repo_type="dataset",
-                        cache_dir="/tmp/hf_cache",
-                    )
-                    with zipfile.ZipFile(zip_path, 'r') as zf:
-                        zf.extractall(mols_dir)
-                    logger.info(f"Extracted mol files: {len(list(mols_dir.glob('*.pkl')))} files")
-                except Exception as e2:
-                    logger.error(f"All mol download attempts failed: {e2}")
-                    raise
+            bundled = Path('/opt/ml/code/data/mols')
+            if bundled.exists():
+                logger.info(f"Copying bundled mol files from {bundled}...")
+                for pkl in bundled.glob('*.pkl'):
+                    shutil.copy2(pkl, mols_dir / pkl.name)
+                logger.info(f"Copied {len(list(mols_dir.glob('*.pkl')))} mol files")
         paths['moldir'] = str(mols_dir)
 
         logger.info(f"Training directory contents: {list(training_dir.iterdir())[:10]}")
