@@ -161,6 +161,12 @@ def build_config_overrides(args, env: dict, data_paths: dict) -> list:
     overrides.append(f"output={env['model_dir']}")
     overrides.append(f"name={args.name}")
     overrides.append(f"trainer.devices={env['num_gpus']}")
+    # g5.2xlarge(24GB) GPU 메모리에 맞게 축소
+    overrides.append("data.max_tokens=128")
+    overrides.append("data.max_atoms=1024")
+    overrides.append("data.max_seqs=256")
+    overrides.append("model.pairformer_args.activation_checkpointing=true")
+    overrides.append("model.score_model_args.activation_checkpointing=true")
 
     if 'target_dir' in data_paths:
         overrides.append(f"data.datasets.0.target_dir={data_paths['target_dir']}")
