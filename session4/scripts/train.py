@@ -165,6 +165,7 @@ def build_config_overrides(args, env: dict, data_paths: dict) -> list:
     overrides.append("data.max_tokens=128")
     overrides.append("data.max_atoms=1024")
     overrides.append("data.max_seqs=256")
+    overrides.append("data.samples_per_epoch=10")
     overrides.append("model.pairformer_args.activation_checkpointing=true")
     overrides.append("model.score_model_args.activation_checkpointing=true")
 
