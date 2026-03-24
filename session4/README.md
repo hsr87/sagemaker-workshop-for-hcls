@@ -4,13 +4,14 @@
 
 BoltzGen은 Diffusion 모델 기반의 단백질 바인더 설계 도구입니다. 타겟 단백질에 결합하는 단백질, 펩타이드, 나노바디 등을 설계할 수 있습니다.
 
-이 세션에서는 Amazon SageMaker를 활용하여 BoltzGen 모델을 **학습(Training Job)** 하고, **추론(Processing Job)** 하는 과정을 실습합니다.
+이 세션에서는 Amazon SageMaker를 활용하여 BoltzGen 모델을 **학습(Training Job)** 하고, **추론(Processing Job)** 하는 과정을 실습합니다. 또한 Google의 **TxGemma** 모델을 SageMaker Real-time Endpoint로 배포하여 약물 특성을 예측합니다.
 
 ## 학습 목표
 
 - BoltzGen 모델의 아키텍처와 파이프라인 이해
 - SageMaker Training Job을 활용한 모델 Fine-tuning
 - SageMaker Processing Job을 활용한 단백질 바인더 설계(추론)
+- SageMaker Real-time Endpoint를 활용한 TxGemma 약물 특성 예측
 - 학습/추론 결과 모니터링 및 분석
 
 ## BoltzGen 파이프라인
@@ -33,6 +34,7 @@ Design (Diffusion) → Inverse Folding → Folding (Boltz-2) → Analysis → Fi
 |--------|------|-----------|
 | [1_training_job.ipynb](./1_training_job.ipynb) | SageMaker Training Job으로 BoltzGen 모델 학습 | ~30분 |
 | [2_inference_job.ipynb](./2_inference_job.ipynb) | SageMaker Processing Job으로 단백질 바인더 설계 | ~30분 |
+| [3_txgemma_endpoint.ipynb](./3_txgemma_endpoint.ipynb) | TxGemma 모델 배포 및 약물 특성(BBB 투과성) 예측 | ~15분 |
 
 ## 사전 준비사항
 
@@ -47,6 +49,7 @@ session4/
 ├── README.md                     # 세션 개요 (현재 파일)
 ├── 1_training_job.ipynb          # 학습 실습 노트북
 ├── 2_inference_job.ipynb         # 추론 실습 노트북
+├── 3_txgemma_endpoint.ipynb     # TxGemma 약물 특성 예측 노트북
 ├── scripts/
 │   ├── train.py                  # Training Job 엔트리포인트
 │   ├── processing_script.py      # Processing Job 엔트리포인트
@@ -75,3 +78,10 @@ session4/
 | ml.g4dn.xlarge | 1 | 16GB | 소규모 테스트 |
 | ml.g5.xlarge | 1 | 24GB | 일반 추론 |
 | ml.g5.12xlarge | 4 | 96GB | 대규모 배치 추론 |
+
+### Real-time Endpoint (TxGemma)
+
+| 인스턴스 | GPU | 메모리 | 용도 |
+|----------|-----|--------|------|
+| ml.g5.2xlarge | 1 | 24GB | TxGemma 2B 모델 |
+| ml.g5.12xlarge | 4 | 96GB | TxGemma 9B/27B 모델 |
