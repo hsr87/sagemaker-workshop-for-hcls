@@ -268,7 +268,7 @@ def build_config_overrides(args, env: dict, data_paths: dict, tensorboard_dir: s
 
     if 'target_dir' in data_paths:
         overrides.append(f"data.datasets.0.target_dir={data_paths['target_dir']}")
-        overrides.append(f"data.datasets.0.manifest_path={data_paths['target_dir']}/manifest.json")
+        overrides.append(f"+data.datasets.0.manifest_path={data_paths['target_dir']}/manifest.json")
     if 'msa_dir' in data_paths:
         overrides.append(f"data.datasets.0.msa_dir={data_paths['msa_dir']}")
     if 'moldir' in data_paths:
