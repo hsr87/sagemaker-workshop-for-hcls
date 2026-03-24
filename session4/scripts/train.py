@@ -253,10 +253,8 @@ def prepare_data_paths(env: dict) -> dict:
         if (training_dir / 'msa').exists():
             paths['msa_dir'] = str(training_dir / 'msa')
 
-        mols_dir = training_dir / 'mols'
-        if mols_dir.exists():
-            ensure_mol_files(mols_dir)
-            paths['moldir'] = str(mols_dir)
+        # moldir: pip-installed boltzgen의 기본 mol 데이터 사용 (버전 호환성 보장)
+        # S3의 mol 데이터는 ccd.pkl만 참조용으로 유지
 
         logger.info(f"Training directory contents: {list(training_dir.iterdir())[:10]}")
 
