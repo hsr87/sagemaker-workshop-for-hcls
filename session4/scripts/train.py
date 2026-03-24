@@ -336,6 +336,22 @@ def build_config_overrides(args, env: dict, data_paths: dict, tensorboard_dir: s
     return overrides
 
 
+def patch_manifest_loader(training_manifest_path: str):
+    """볼츠겐 Manifest.load를 패치하여 학습 데이터 manifest를 강제 사용합니다."""
+    from boltzgen.data.data import Manifest
+
+    original_load = Manifest.load.__func__
+
+    @classmethod
+    def patched_load(cls, path):
+        forced_path = Path(training_manifest_path)
+        logger.info(f"Manifest.load intercepted: {path} -> {forced_path}")
+        return original_load(cls, forced_path)
+
+    Manifest.load = patched_load
+    logger.info(f"Manifest.load patched to always use: {training_manifest_path}")
+
+
 def run_training(args, env: dict, config_overrides: list, tensorboard_dir: str):
     """BoltzGen 학습 파이프라인을 실행합니다."""
     import hydra
@@ -427,11 +443,12 @@ def main():
     data_paths = prepare_data_paths(env)
     logger.info(f"Data paths: {data_paths}")
 
-    # pip 패키지 내장 manifest를 학습 데이터 manifest로 교체
+    # Manifest.load를 monkey-patch하여 학습 데이터 manifest만 사용
     if 'target_dir' in data_paths:
         manifest_file = Path(data_paths['target_dir']) / 'manifest.json'
         if manifest_file.exists():
             patch_boltzgen_manifest(str(manifest_file))
+            patch_manifest_loader(str(manifest_file))
 
     config_overrides = build_config_overrides(args, env, data_paths, tensorboard_dir)
 
