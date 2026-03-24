@@ -253,34 +253,39 @@ def prepare_data_paths(env: dict) -> dict:
         if (training_dir / 'msa').exists():
             paths['msa_dir'] = str(training_dir / 'msa')
 
-        # moldir: pip-installed boltzgen에서 mol 파일을 생성 (dtype 호환 보장)
+        # moldir: boltzgen 패키지의 캐시에서 mol 데이터 다운로드 (dtype 호환 보장)
         mols_dir = training_dir / 'mols'
         mols_dir.mkdir(parents=True, exist_ok=True)
         if not (mols_dir / 'ALA.pkl').exists():
-            logger.info("Generating mol pkl files from boltzgen package...")
+            logger.info("Downloading mol files via huggingface_hub (boltzgen compatible)...")
+            import zipfile
+            import tempfile
             try:
-                from boltzgen.data.parse.mmcif import parse_ccd_residue
-                import pickle
-                canonical = ["ALA","ARG","ASN","ASP","CYS","GLN","GLU","GLY","HIS","ILE",
-                             "LEU","LYS","MET","PHE","PRO","SER","THR","TRP","TYR","VAL"]
-                ccd_path = mols_dir / 'ccd.pkl'
-                ccd = {}
-                if ccd_path.exists():
-                    with open(ccd_path, 'rb') as f:
-                        ccd = pickle.load(f)
-                for aa in canonical:
-                    mol = parse_ccd_residue(aa, ccd)
-                    if mol is not None:
-                        with open(mols_dir / f'{aa}.pkl', 'wb') as f:
-                            pickle.dump(mol, f)
-                logger.info(f"Generated {len(list(mols_dir.glob('*.pkl')))} mol files")
+                from huggingface_hub import hf_hub_download
+                zip_path = hf_hub_download(
+                    repo_id="boltzmannlabs/boltz2",
+                    filename="ccd/mols.zip",
+                    repo_type="model",
+                    cache_dir="/tmp/hf_cache",
+                )
+                with zipfile.ZipFile(zip_path, 'r') as zf:
+                    zf.extractall(mols_dir)
+                logger.info(f"Extracted mol files: {len(list(mols_dir.glob('*.pkl')))} files")
             except Exception as e:
-                logger.warning(f"Could not generate mol files from boltzgen: {e}")
-                logger.info("Falling back to bundled mol files...")
-                bundled = Path('/opt/ml/code/data/mols')
-                if bundled.exists():
-                    for pkl in bundled.glob('*.pkl'):
-                        shutil.copy2(pkl, mols_dir / pkl.name)
+                logger.warning(f"HF download failed: {e}, trying alternative source...")
+                try:
+                    zip_path = hf_hub_download(
+                        repo_id="boltzgen/inference-data",
+                        filename="mols.zip",
+                        repo_type="dataset",
+                        cache_dir="/tmp/hf_cache",
+                    )
+                    with zipfile.ZipFile(zip_path, 'r') as zf:
+                        zf.extractall(mols_dir)
+                    logger.info(f"Extracted mol files: {len(list(mols_dir.glob('*.pkl')))} files")
+                except Exception as e2:
+                    logger.error(f"All mol download attempts failed: {e2}")
+                    raise
         paths['moldir'] = str(mols_dir)
 
         logger.info(f"Training directory contents: {list(training_dir.iterdir())[:10]}")
