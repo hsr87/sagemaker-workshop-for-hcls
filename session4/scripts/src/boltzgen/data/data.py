@@ -339,6 +339,22 @@ class Structure(NumpySerializable):
         """
         structure = np.load(path)
 
+        # Convert atoms from newer 7-field format to expected 5-field Atom dtype if needed
+        raw_atoms = structure["atoms"]
+        if raw_atoms.dtype.names != tuple(f[0] for f in Atom):
+            converted = np.zeros(len(raw_atoms), dtype=Atom)
+            # name: i1[4] -> U4 (decode integer-encoded atom names)
+            if raw_atoms["name"].ndim == 2:
+                for i, encoded in enumerate(raw_atoms["name"]):
+                    converted["name"][i] = ''.join(chr(c + 32) for c in encoded if c != 0)
+            else:
+                converted["name"] = raw_atoms["name"]
+            converted["coords"] = raw_atoms["coords"]
+            converted["is_present"] = raw_atoms["is_present"]
+            atoms = converted
+        else:
+            atoms = raw_atoms
+
         # Temporary for adding a  cyclic period that is not yet in the preprocessed data
         if "cyclic_period" not in structure["chains"].dtype.names:
             chains = np.empty(structure["chains"].shape, dtype=Chain)
@@ -349,7 +365,7 @@ class Structure(NumpySerializable):
             chains = structure["chains"]
 
         return cls(
-            atoms=structure["atoms"],
+            atoms=atoms,
             bonds=structure["bonds"],
             residues=structure["residues"],
             chains=chains,
