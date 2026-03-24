@@ -253,8 +253,35 @@ def prepare_data_paths(env: dict) -> dict:
         if (training_dir / 'msa').exists():
             paths['msa_dir'] = str(training_dir / 'msa')
 
-        # moldir: pip-installed boltzgen의 기본 mol 데이터 사용 (버전 호환성 보장)
-        # S3의 mol 데이터는 ccd.pkl만 참조용으로 유지
+        # moldir: pip-installed boltzgen에서 mol 파일을 생성 (dtype 호환 보장)
+        mols_dir = training_dir / 'mols'
+        mols_dir.mkdir(parents=True, exist_ok=True)
+        if not (mols_dir / 'ALA.pkl').exists():
+            logger.info("Generating mol pkl files from boltzgen package...")
+            try:
+                from boltzgen.data.parse.mmcif import parse_ccd_residue
+                import pickle
+                canonical = ["ALA","ARG","ASN","ASP","CYS","GLN","GLU","GLY","HIS","ILE",
+                             "LEU","LYS","MET","PHE","PRO","SER","THR","TRP","TYR","VAL"]
+                ccd_path = mols_dir / 'ccd.pkl'
+                ccd = {}
+                if ccd_path.exists():
+                    with open(ccd_path, 'rb') as f:
+                        ccd = pickle.load(f)
+                for aa in canonical:
+                    mol = parse_ccd_residue(aa, ccd)
+                    if mol is not None:
+                        with open(mols_dir / f'{aa}.pkl', 'wb') as f:
+                            pickle.dump(mol, f)
+                logger.info(f"Generated {len(list(mols_dir.glob('*.pkl')))} mol files")
+            except Exception as e:
+                logger.warning(f"Could not generate mol files from boltzgen: {e}")
+                logger.info("Falling back to bundled mol files...")
+                bundled = Path('/opt/ml/code/data/mols')
+                if bundled.exists():
+                    for pkl in bundled.glob('*.pkl'):
+                        shutil.copy2(pkl, mols_dir / pkl.name)
+        paths['moldir'] = str(mols_dir)
 
         logger.info(f"Training directory contents: {list(training_dir.iterdir())[:10]}")
 
