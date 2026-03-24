@@ -268,33 +268,16 @@ def prepare_data_paths(env: dict) -> dict:
         if (training_dir / 'msa').exists():
             paths['msa_dir'] = str(training_dir / 'msa')
 
-        # moldir: 번들된 mol 파일을 참조 소스의 Atom dtype으로 변환하여 사용
+        # moldir: 번들된 mol 파일을 바이너리 복사 (re-pickle 금지 - RDKit atom properties 손실 방지)
         mols_dir = training_dir / 'mols'
         mols_dir.mkdir(parents=True, exist_ok=True)
         if not (mols_dir / 'ALA.pkl').exists():
             bundled = Path('/opt/ml/code/data/mols')
             if bundled.exists():
-                import pickle
-                import numpy as np
-                from boltzgen.data.data import Atom  # 참조 소스의 Atom dtype
-                logger.info(f"Converting bundled mol files to compatible dtype...")
+                logger.info(f"Copying bundled mol files (binary copy)...")
                 for pkl_file in bundled.glob('*.pkl'):
-                    with open(pkl_file, 'rb') as f:
-                        mol = pickle.load(f)
-                    # mol.atoms의 dtype을 참조 소스의 Atom dtype으로 변환
-                    if hasattr(mol, 'atoms') and mol.atoms.dtype != np.dtype(Atom):
-                        old_atoms = mol.atoms
-                        new_atoms = np.zeros(len(old_atoms), dtype=Atom)
-                        new_atoms['name'] = old_atoms['name']
-                        new_atoms['coords'] = old_atoms['coords']
-                        new_atoms['is_present'] = old_atoms['is_present']
-                        # bfactor/plddt는 기본값 0으로
-                        mol = mol._replace(atoms=new_atoms) if hasattr(mol, '_replace') else mol
-                        if not hasattr(mol, '_replace'):
-                            mol.atoms = new_atoms
-                    with open(mols_dir / pkl_file.name, 'wb') as f:
-                        pickle.dump(mol, f)
-                logger.info(f"Converted {len(list(mols_dir.glob('*.pkl')))} mol files")
+                    shutil.copy2(pkl_file, mols_dir / pkl_file.name)
+                logger.info(f"Copied {len(list(mols_dir.glob('*.pkl')))} mol files")
         paths['moldir'] = str(mols_dir)
 
         logger.info(f"Training directory contents: {list(training_dir.iterdir())[:10]}")
