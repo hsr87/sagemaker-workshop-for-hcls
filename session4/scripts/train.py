@@ -31,10 +31,15 @@ def install_dependencies():
             subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--quiet', dep])
         except subprocess.CalledProcessError:
             print(f"Warning: Failed to install {dep}")
+    # 의존성이 boltzgen을 자동 설치했을 경우 제거 (source_dir의 참조 소스코드 사용을 위해)
+    subprocess.run([sys.executable, '-m', 'pip', 'uninstall', '-y', 'boltzgen'], capture_output=True)
     print("Dependencies installation complete.")
 
 
 install_dependencies()
+
+# source_dir의 참조 소스코드를 최우선으로 사용
+sys.path.insert(0, '/opt/ml/code/src')
 
 
 def patch_boltzgen_manifest(training_manifest_path: str):
